@@ -1,0 +1,42 @@
+First, determine exactly where the break is occurring. Open Command Prompt (cmd) and run these three checks:
+
+    Internal Check: Type ping 127.0.0.1. If this fails, your internal network card is likely broken.
+
+    Router Check: Type ipconfig and find your Default Gateway (usually 192.168.1.1). Type ping [Gateway IP]. If this fails, the issue is between your PC and the router.
+
+    External Check: Type ping 8.8.8.8. If this works but your browser doesn't, you have a DNS issue.
+
+
+2. Standardized Diagnostic Steps
+
+Run these steps in order and note the results for the ticket.
+Step A: Identify the IP Configuration
+
+Run ipconfig /all and look for the following:
+
+    Status: Is the Media State "Media disconnected"?
+
+    IP Address: Is it a valid private IP (192.168.x.x, 10.x.x.x) or an APIPA "failure" address (169.254.x.x)?
+
+    DNS Servers: Are they listed, or is the field blank?
+
+Step B: The "Stack Reset"
+
+Execute these commands to ensure the software layer is clean:
+
+    netsh winsock reset
+
+    netsh int ip reset
+
+    ipconfig /flushdns
+    Note: Restart the PC after these commands to apply changes.
+
+Step C: Adapter Verification
+
+    Open Device Manager (devmgmt.msc).
+
+    Check Network Adapters.
+
+    Look for any Yellow Triangles or Red X's. If one exists, the driver has crashed or the hardware is disabled
+
+
